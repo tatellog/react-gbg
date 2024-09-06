@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Pokemon } from "../pokemonTypes";
+import { Pokemon } from "../types/pokemonTypes";
 
 interface PokemonProps {
   pokemon: Pokemon[];
