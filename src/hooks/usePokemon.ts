@@ -16,7 +16,7 @@ const usePokemon = (page: number) => {
         const limit = 20;
         const offset = (page - 1) * limit;
         const result = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`); 
-        setPokemonList(result?.data )
+        setPokemonList(result?.data.results )
         
       } catch (error) {
         setError("Failed to fetch Pokemon.")

@@ -2,7 +2,6 @@ import "./styles.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import PokemonList from "./components/PokemonList";
-import { Pokemon } from "./types/pokemonTypes";
 import usePokemon from "./hooks/usePokemon";
 
 export default function App() {
@@ -16,6 +15,7 @@ export default function App() {
     <div className="App">
       <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2>
+      <PokemonList pokemon={pokemonList} />
     </div>
   );
 }
