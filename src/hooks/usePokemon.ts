@@ -15,8 +15,12 @@ const usePokemon = (page: number) => {
       try {
         const limit = 20;
         const offset = (page - 1) * limit;
-        const result = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`); 
-        setPokemonList(result?.data.results )
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`); 
+        const result = response.data.results.map((pokemon: any) => ({
+          name: pokemon.name,
+          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`
+        }))
+        setPokemonList(result)
         
       } catch (error) {
         setError("Failed to fetch Pokemon.")
