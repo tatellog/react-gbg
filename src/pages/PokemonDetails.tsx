@@ -9,10 +9,6 @@ import {
   Alert,
   Box,
   Button,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
 } from "@mui/material";
 
 const PokemonDetails: React.FC = () => {
@@ -49,76 +45,50 @@ const PokemonDetails: React.FC = () => {
     setError(null);
   };
 
-  if (loading)
-    return (
-      <Container>
-        <CircularProgress />
-      </Container>
-    );
+  if (loading) return <CircularProgress />;
   if (error)
     return (
       <Container>
         <Alert severity="error">{error}</Alert>
-        <Button variant="contained" onClick={handleRetry} sx={{ mt: 2 }}>
+        <Button variant="contained" onClick={handleRetry}>
           Retry
         </Button>
       </Container>
     );
 
   return pokemonDetails ? (
-    <Container sx={{ padding: "1rem" }}>
+    <Container>
       <Typography
         variant="h3"
         gutterBottom
-        align="center"
-        sx={{ textTransform: "capitalize", mb: 2 }}
+        sx={{ textTransform: "capitalize" }}
       >
         {pokemonDetails.name}
       </Typography>
-      <Grid container spacing={4} justifyContent="center">
-        <Grid item xs={12} sm={6} md={4}>
-          <Card>
-            <CardMedia
-              component="img"
-              height="200"
-              image={pokemonDetails.sprites.front_default}
-              alt={pokemonDetails.name}
-            />
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Types
-              </Typography>
-              <Typography variant="body1">
-                {pokemonDetails.types.map((type) => type.name).join(", ")}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={8}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Abilities
-              </Typography>
-              <Typography variant="body1">
-                {pokemonDetails.abilities
-                  .map((ability) => ability.ability.name)
-                  .join(", ")}
-              </Typography>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Stats
-              </Typography>
-              <Box>
-                {pokemonDetails.stats.map((stat) => (
-                  <Typography variant="body1" key={stat.stat.name}>
-                    {stat.stat.name}: {stat.base_stat}
-                  </Typography>
-                ))}
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      <Box mb={2}>
+        <img
+          src={pokemonDetails.sprites.front_default}
+          alt={pokemonDetails.name}
+          style={{ width: "200px", height: "200px" }}
+        />
+      </Box>
+      <Typography variant="h6">
+        Types: {pokemonDetails.types.map((type) => type.name).join(", ")}
+      </Typography>
+      <Typography variant="h6">
+        Abilities:{" "}
+        {pokemonDetails.abilities
+          .map((ability) => ability.ability.name)
+          .join(", ")}
+      </Typography>
+      <Typography variant="h6">Stats:</Typography>
+      <ul>
+        {pokemonDetails.stats.map((stat) => (
+          <li key={stat.stat.name}>
+            {stat.stat.name}: {stat.base_stat}
+          </li>
+        ))}
+      </ul>
     </Container>
   ) : null;
 };
