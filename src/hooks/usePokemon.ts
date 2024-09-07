@@ -1,37 +1,48 @@
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Pokemon } from "../types/pokemonTypes";
+import { Pokemon, PokemonPaginatedResponse } from "../types/pokemonTypes";
 
-const usePokemon = (page: number) => {
+const usePokemon = (page: number, limit: number) => {
+  const [pokemonList, setPokemonList] = useState<PokemonPaginatedResponse | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string>("")
-
-    useEffect(() => {
-      const fetchApi = async () => {
+  useEffect(() => {
+    const fetchPokemon = async () => {
       setLoading(true);
-      setError("Error")
+      setError(null);
       try {
-        const limit = 20;
         const offset = (page - 1) * limit;
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`); 
-        const result = response.data.results.map((pokemon: any) => ({
-          name: pokemon.name,
-          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`
-        }))
-        setPokemonList(result)
-        
-      } catch (error) {
-        setError("Failed to fetch Pokemon.")
-      } finally {
-        setLoading(false)
-      }
-      };
-      fetchApi();
-    }, [page]);
+        const response = await axios.get<PokemonPaginatedResponse>(
+          `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+        );
 
-    return { pokemonList, loading, error}
+        const updatedResults = response.data.results.map((pokemon: Pokemon) => {
+          console.log({pokemon})
+          const pokemonId = pokemon?.url.split('/').filter(Boolean).pop(); // Extract the Pokémon ID from the URL
+          const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+
+          return {
+            ...pokemon,
+            image: imageUrl, // Add the image URL directly
+          };
+        });
+
+        setPokemonList({
+          ...response.data,
+          results: updatedResults, 
+        });
+      } catch (err) {
+        setError("Error fetching Pokémon data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPokemon();
+  }, [page, limit]);
+
+  return { pokemonList, loading, error };
 };
 
 export default usePokemon;
