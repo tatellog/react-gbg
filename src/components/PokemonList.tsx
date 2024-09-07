@@ -1,7 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Pokemon } from "../types/pokemonTypes";
-import PokemonCard from "./PokemonCard";
-import "../../src/styles.css";
 
 interface PokemonListProps {
   pokemon: Pokemon[];
@@ -9,14 +8,16 @@ interface PokemonListProps {
 
 const PokemonList: React.FC<PokemonListProps> = ({ pokemon }) => {
   return (
-    <div className="pokemon-list">
-      {pokemon.map((p: Pokemon) => (
-        <div key={p.name} className="pokemon-item">
-          <h3>{p.name}</h3>
-          <img src={p.image} alt={p.name} />
-        </div>
+    <ul>
+      {pokemon.map((poke) => (
+        <li key={poke.name}>
+          <Link to={`/pokemon/${poke.name}`}>
+            <img src={poke.image} alt={poke.name} />
+            {poke.name}
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 
