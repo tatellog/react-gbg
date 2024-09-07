@@ -30,43 +30,55 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemon }) => {
     <Grid container spacing={2} p={4}>
       {pokemon.map((poke) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={poke.id}>
-          <Card
-            sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+          <Link
+            to={`/pokemon/${poke.name}`}
+            style={{ textDecoration: "none", color: "inherit" }}
           >
-            <CardMedia
-              component="img"
-              sx={{ height: 140, objectFit: "contain" }}
-              image={poke.image}
-              alt={poke.name}
-            />
-            <CardContent
+            <Card
               sx={{
-                flex: "1 0 auto",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
+                height: "100%",
+                cursor: "pointer", // Add cursor style for visual feedback
+                transition: "0.3s", // Add a smooth transition for hover effect
+                "&:hover": {
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Hover effect for shadow
+                },
               }}
             >
-              <Typography component="div" variant="h6" align="center">
-                <Link
-                  to={`/pokemon/${poke.name}`}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  {poke.name}
-                </Link>
-              </Typography>
-              <Button
-                variant={isFavorite(poke) ? "contained" : "outlined"}
-                color="primary"
-                onClick={() => handleFavoriteToggle(poke)}
-                sx={{ marginTop: 1 }}
+              <CardMedia
+                component="img"
+                sx={{ height: 140, objectFit: "contain" }}
+                image={poke.image}
+                alt={poke.name}
+              />
+              <CardContent
+                sx={{
+                  flex: "1 0 auto",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
               >
-                {isFavorite(poke)
-                  ? "Remove from Favorites"
-                  : "Add to Favorites"}
-              </Button>
-            </CardContent>
-          </Card>
+                <Typography component="div" variant="h6" align="center">
+                  {poke.name}
+                </Typography>
+                <Button
+                  variant={isFavorite(poke) ? "contained" : "outlined"}
+                  color="primary"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent click event from propagating to the Link
+                    handleFavoriteToggle(poke);
+                  }}
+                  sx={{ marginTop: 1 }}
+                >
+                  {isFavorite(poke)
+                    ? "Remove from Favorites"
+                    : "Add to Favorites"}
+                </Button>
+              </CardContent>
+            </Card>
+          </Link>
         </Grid>
       ))}
     </Grid>
