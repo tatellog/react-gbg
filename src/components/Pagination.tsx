@@ -1,11 +1,13 @@
-import React, { FC } from "react";
+import React from "react";
+import { Button, Box, Typography } from "@mui/material";
+
 interface PaginationProps {
   currentPage: number;
   totalPage: number;
   onPageChange: (page: number) => void;
 }
 
-const Pagination: FC<PaginationProps> = ({
+const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPage,
   onPageChange,
@@ -21,18 +23,19 @@ const Pagination: FC<PaginationProps> = ({
       onPageChange(currentPage + 1);
     }
   };
+
   return (
-    <div>
-      <button onClick={handlePrevious} disabled={currentPage === 1}>
+    <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
+      <Button onClick={handlePrevious} disabled={currentPage === 1}>
         Prev
-      </button>
-      <span>
+      </Button>
+      <Typography variant="body1" mx={2}>
         {currentPage} of {totalPage}
-      </span>
-      <button onClick={handleNext} disabled={currentPage === totalPage}>
+      </Typography>
+      <Button onClick={handleNext} disabled={currentPage === totalPage}>
         Next
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
 

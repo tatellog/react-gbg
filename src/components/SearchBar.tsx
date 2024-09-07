@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { TextField } from "@mui/material";
 
 interface Props {
   onSearch: (query: string) => void;
@@ -17,17 +18,13 @@ const SearchBar: React.FC<Props> = ({ onSearch }) => {
     };
   }, [searchQuery, onSearch]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    onSearch(e.target.value);
-  };
-
   return (
-    <input
-      type="text"
+    <TextField
+      label="Search Pokémon"
+      variant="outlined"
+      fullWidth
       value={searchQuery}
-      onChange={handleChange}
-      placeholder="Search Pokemon"
+      onChange={(e) => setSearchQuery(e.target.value)}
     />
   );
 };

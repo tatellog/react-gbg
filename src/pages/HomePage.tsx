@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import {
+  Container,
+  Typography,
+  Box,
+  CircularProgress,
+  Alert,
+} from "@mui/material";
 import Pagination from "../components/Pagination";
 import PokemonList from "../components/PokemonList";
 import SearchBar from "../components/SearchBar";
@@ -15,26 +22,29 @@ const HomePage: React.FC = () => {
     query
   );
 
-  if (loading) return <div>Loading...</div>;
-
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
 
   return (
-    <div className="App">
-      <h1>Poke Deck</h1>
-      {error && <p>{error}</p>}
+    <Container>
+      <Typography variant="h2" gutterBottom>
+        Poke Deck
+      </Typography>
+      {loading && <CircularProgress />}
+      {error && <Alert severity="error">{error}</Alert>}
       <SearchBar onSearch={setQuery} />
       <PokemonList pokemon={filteredPokemonList} />
       {pokemonList && (
-        <Pagination
-          currentPage={page}
-          totalPage={Math.ceil(pokemonList.count / LIMIT)}
-          onPageChange={handlePageChange}
-        />
+        <Box mt={2}>
+          <Pagination
+            currentPage={page}
+            totalPage={Math.ceil(pokemonList.count / LIMIT)}
+            onPageChange={handlePageChange}
+          />
+        </Box>
       )}
-    </div>
+    </Container>
   );
 };
 
