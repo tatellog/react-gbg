@@ -10,17 +10,18 @@ interface PokemonListProps {
 const PokemonList: React.FC<PokemonListProps> = ({ pokemon }) => {
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
-  const handleFavoriteToggle = (pokemon: Pokemon) => {
-    if (isFavorite(pokemon)) {
-      removeFavorite(pokemon);
+  const handleFavoriteToggle = (poke: Pokemon) => {
+    if (isFavorite(poke)) {
+      removeFavorite(poke);
     } else {
-      addFavorite(pokemon);
+      addFavorite(poke);
     }
   };
+
   return (
     <ul>
       {pokemon.map((poke) => (
-        <li key={poke.name}>
+        <li key={poke.id}>
           <Link to={`/pokemon/${poke.name}`}>
             <img src={poke.image} alt={poke.name} />
             {poke.name}

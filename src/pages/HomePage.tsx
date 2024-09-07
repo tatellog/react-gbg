@@ -1,12 +1,12 @@
+import React, { useState } from "react";
 import Pagination from "../components/Pagination";
 import PokemonList from "../components/PokemonList";
 import SearchBar from "../components/SearchBar";
 import usePokemon from "../hooks/usePokemon";
-import { useState } from "react";
 
 const LIMIT = 20;
 
-export default function HomePage() {
+const HomePage: React.FC = () => {
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const { filteredPokemonList, pokemonList, loading, error } = usePokemon(
@@ -36,4 +36,6 @@ export default function HomePage() {
       )}
     </div>
   );
-}
+};
+
+export default HomePage;

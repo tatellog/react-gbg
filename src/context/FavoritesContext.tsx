@@ -22,6 +22,9 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
 
   const addFavorite = (pokemon: Pokemon) => {
     setFavorites((prev) => {
+      if (prev.some((fav) => fav.id === pokemon.id)) {
+        return prev;
+      }
       const updatedFavorites = [...prev, pokemon];
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
       return updatedFavorites;
