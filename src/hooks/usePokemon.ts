@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Pokemon, PokemonPaginatedResponse } from "../types/pokemonTypes";
 
-const usePokemon = (page: number, limit: number) => {
+const usePokemon = (page: number, limit: number, query: string) => {
   const [pokemonList, setPokemonList] = useState<PokemonPaginatedResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +42,14 @@ const usePokemon = (page: number, limit: number) => {
     fetchPokemon();
   }, [page, limit]);
 
-  return { pokemonList, loading, error };
+  const filteredPokemonList = useMemo(() => {
+    if (!pokemonList?.results) return [];
+    return pokemonList.results.filter(pokemon =>
+      pokemon.name.toLowerCase().includes(query.toLowerCase())
+    );
+  }, [query, pokemonList]);
+
+  return { pokemonList, filteredPokemonList, loading, error };
 };
 
 export default usePokemon;

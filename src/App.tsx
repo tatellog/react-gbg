@@ -3,12 +3,18 @@ import { useState } from "react";
 import PokemonList from "./components/PokemonList";
 import usePokemon from "./hooks/usePokemon";
 import Pagination from "./components/Pagination";
+import SearchBar from "./components/SearchBar";
 
 const LIMIT = 20;
 
 export default function App() {
+  const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const { pokemonList, loading, error } = usePokemon(page, LIMIT);
+  const { filteredPokemonList, pokemonList, loading, error } = usePokemon(
+    page,
+    LIMIT,
+    query
+  );
 
   if (loading) return <div>Loading...</div>;
 
@@ -20,7 +26,8 @@ export default function App() {
     <div className="App">
       <h1>Poke Deck</h1>
       {error && <p>{error}</p>}
-      {pokemonList?.results && <PokemonList pokemon={pokemonList.results} />}
+      <SearchBar onSearch={setQuery} />
+      <PokemonList pokemon={filteredPokemonList} />
       {pokemonList && (
         <Pagination
           currentPage={page}
