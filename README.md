@@ -69,6 +69,72 @@ When a user clicks on a Pokémon from the list, navigate to a details page.
 ## Improvements
 
 After your final submission, review the following topics for improvement:
+
 - Code structure
 - Functionality
 - Best practices
+
+# Pokémon App by Tania Tello
+
+## Achievements
+
+### Home Page
+
+- **Search and Filter**: Implemented a search bar and filter functionality to easily find and display Pokémon based on name and type.
+- **Pagination**: Added pagination to handle large lists of Pokémon efficiently, enhancing the user experience by displaying data in chunks.
+
+### Pokémon Details Page
+
+- **Detailed Information**: Displays comprehensive details about the selected Pokémon, including:
+  - **Name**
+  - **Image**
+  - **Types** (e.g., Water, Fire)
+  - **Abilities**
+  - **Stats** (HP, Attack, Defense, etc.)
+  - **Evolution Chain** (if applicable)
+
+### Favorite Pokémon
+
+- **Favorites Management**: Integrated a system allowing users to mark Pokémon as favorites and persist these favorites in local storage.
+- **Favorite Toggle**: Allows users to add or remove Pokémon from their favorites, updating the UI to reflect the current status.
+
+### Error Handling
+
+- **API Requests**: Implemented error handling for failed API requests, including user-friendly error messages and a retry mechanism.
+
+### Responsive Design
+
+- **Consistent Experience**: Ensured that the application is fully responsive and provides a consistent user experience across various devices.
+
+### Filter Component
+
+- **Filtering and Sorting**: Allows users to filter Pokémon by type and sort by attributes like name, HP, attack, and defense.
+
+## How to Run the Project
+
+1. **Clone the Repository**:
+
+    ```bash
+    git clone https://github.com/your-repository-url.git
+    cd your-repository-directory
+    ```
+
+2. **Install Dependencies**:
+
+    ```bash
+    npm install
+    ```
+
+3. **Start the Development Server**:
+
+    ```bash
+    npm run start
+    ```
+
+4. **Open the Application**: Navigate to [http://localhost:3000](http://localhost:3000) in your web browser to view the application.
+
+## Improvements
+
+Personal Improvement
+
+- **Next.js**: Explore using Next.js for improved handling of routing and images, leveraging its server-side rendering and static site generation features for better performance and SEO and routing.
