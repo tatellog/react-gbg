@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -10,16 +10,21 @@ import Pagination from "../components/Pagination";
 import PokemonList from "../components/PokemonList";
 import SearchBar from "../components/SearchBar";
 import usePokemon from "../hooks/usePokemon";
+import FilterComponent from "../components/Filter";
+import { usePokemonFilter } from "../context/PokemonFilterContext";
 
 const LIMIT = 20;
 
 const HomePage: React.FC = () => {
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+  const { sortBy, filterByType } = usePokemonFilter();
   const { filteredPokemonList, pokemonList, loading, error } = usePokemon(
     page,
     LIMIT,
-    query
+    query,
+    sortBy,
+    filterByType
   );
 
   const handlePageChange = (newPage: number) => {
@@ -34,6 +39,7 @@ const HomePage: React.FC = () => {
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
       <SearchBar onSearch={setQuery} />
+      <FilterComponent />
       <PokemonList pokemon={filteredPokemonList} />
       {pokemonList && (
         <Box mt={2}>

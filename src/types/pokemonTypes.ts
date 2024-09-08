@@ -1,4 +1,6 @@
 export interface Pokemon {
+  types: any;
+  stats: any;
   id: string |number;
   name: string;
   image: string;
