@@ -60,7 +60,12 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemon }) => {
                   alignItems: "center",
                 }}
               >
-                <Typography component="div" variant="h6" align="center">
+                <Typography
+                  component="div"
+                  variant="h6"
+                  align="center"
+                  textTransform="capitalize"
+                >
                   {poke.name}
                 </Typography>
                 <Button

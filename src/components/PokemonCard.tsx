@@ -8,7 +8,14 @@ interface PokemonCardProps {
 
 const PokemonCard: FC<PokemonCardProps> = ({ pokemon }) => {
   return (
-    <Card sx={{ maxWidth: 345, margin: 2, boxShadow: 3 }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        margin: 2,
+        boxShadow: 3,
+        textTransform: "capitalize",
+      }}
+    >
       <CardMedia
         component="img"
         height="140"

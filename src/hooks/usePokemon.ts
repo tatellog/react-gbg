@@ -77,7 +77,7 @@ const usePokemon = (
       if (sortBy === "defense") {
         return (b.stats.defense || 0) - (a.stats.defense || 0);
       }
-      return 0; 
+      return 0; // Default sorting (by name)
     });
 
     return sortedList;
