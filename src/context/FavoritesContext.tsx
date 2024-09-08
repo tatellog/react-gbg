@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import { Pokemon } from "../types/pokemonTypes";
 
 interface FavoritesContextType {
@@ -15,33 +21,40 @@ const FavoritesContext = createContext<FavoritesContextType | undefined>(
 export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  // Initialize favorites from localStorage
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
-    const savedFavorites = localStorage.getItem("favorites");
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
+    try {
+      const savedFavorites = localStorage.getItem("favorites");
+      return savedFavorites ? JSON.parse(savedFavorites) : [];
+    } catch (error) {
+      console.error("Error parsing favorites from localStorage", error);
+      return [];
+    }
   });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    } catch (error) {
+      console.error("Error saving favorites to localStorage", error);
+    }
+  }, [favorites]);
 
   const addFavorite = (pokemon: Pokemon) => {
     setFavorites((prev) => {
       if (prev.some((fav) => fav.id === pokemon.id)) {
         return prev;
       }
-      const updatedFavorites = [...prev, pokemon];
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return updatedFavorites;
+      return [...prev, pokemon];
     });
   };
 
   const removeFavorite = (pokemon: Pokemon) => {
-    setFavorites((prev) => {
-      const updatedFavorites = prev.filter((fav) => fav.id !== pokemon.id);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return updatedFavorites;
-    });
+    setFavorites((prev) => prev.filter((fav) => fav.id !== pokemon.id));
   };
 
-  const isFavorite = (pokemon: Pokemon) => {
-    return favorites.some((fav) => fav.id === pokemon.id);
-  };
+  const isFavorite = (pokemon: Pokemon) =>
+    favorites.some((fav) => fav.id === pokemon.id);
 
   return (
     <FavoritesContext.Provider

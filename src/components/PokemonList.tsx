@@ -18,7 +18,8 @@ interface PokemonListProps {
 const PokemonList: React.FC<PokemonListProps> = ({ pokemon }) => {
   const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
-  const handleFavoriteToggle = (poke: Pokemon) => {
+  const handleFavoriteToggle = (poke: Pokemon, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent click event from propagating to the Link
     if (isFavorite(poke)) {
       removeFavorite(poke);
     } else {
@@ -30,21 +31,21 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemon }) => {
     <Grid container spacing={2} p={4}>
       {pokemon.map((poke) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={poke.id}>
-          <Link
-            to={`/pokemon/${poke.name}`}
-            style={{ textDecoration: "none", color: "inherit" }}
+          <Card
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              cursor: "pointer",
+              transition: "0.3s",
+              "&:hover": {
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              },
+            }}
           >
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-                cursor: "pointer", // Add cursor style for visual feedback
-                transition: "0.3s", // Add a smooth transition for hover effect
-                "&:hover": {
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Hover effect for shadow
-                },
-              }}
+            <Link
+              to={`/pokemon/${poke.name}`}
+              style={{ textDecoration: "none", color: "inherit" }}
             >
               <CardMedia
                 component="img"
@@ -71,10 +72,7 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemon }) => {
                 <Button
                   variant={isFavorite(poke) ? "contained" : "outlined"}
                   color="primary"
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent click event from propagating to the Link
-                    handleFavoriteToggle(poke);
-                  }}
+                  onClick={(e) => handleFavoriteToggle(poke, e)}
                   sx={{ marginTop: 1 }}
                 >
                   {isFavorite(poke)
@@ -82,8 +80,8 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemon }) => {
                     : "Add to Favorites"}
                 </Button>
               </CardContent>
-            </Card>
-          </Link>
+            </Link>
+          </Card>
         </Grid>
       ))}
     </Grid>
