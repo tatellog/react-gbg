@@ -104,6 +104,8 @@ After your final submission, review the following topics for improvement:
 
 ### Responsive Design
 
+Important: I skip Test due to taking me more time to configure, with more time i will able to do it
+
 - **Consistent Experience**: Ensured that the application is fully responsive and provides a consistent user experience across various devices.
 
 ### Filter Component
