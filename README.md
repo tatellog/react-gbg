@@ -117,7 +117,7 @@ Important: I skip Test due to taking me more time to configure, with more time i
 1. **Clone the Repository**:
 
     ```bash
-    git clone https://github.com/your-repository-url.git
+    git clone https://github.com/tatellog/react-gbg.git
     cd your-repository-directory
     ```
 
